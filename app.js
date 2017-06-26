@@ -13,7 +13,7 @@ server.listen(port, function () {
 app.use(express.static(__dirname + '/public'));
 
 // Chatroom
-
+var rooms = [];
 var numUsers = 0;
 
 io.on('connection', function (socket) {
@@ -78,11 +78,17 @@ io.on('connection', function (socket) {
 
   socket.on('join room', function(room){
       room = JSON.parse(room);
+      rooms.push(room);
       console.log('join room: ' + room.name);
       socket.join(room.bssid);
       io.in(room.bssid).emit('login2', {
-        message: 'Nova sala adicionada: ' + room.name,
+        message: 'Welcome to the room: ' + room.name,
         bssid: room.bssid
       })
+  });
+
+  socket.on('message to room', function(room){
+      console.log('message to room: ' + room.message + ' bssid: ' + room.bssid);
+      io.in(room.bssid).emit('login2', room);    
   });
 });

@@ -13,6 +13,9 @@ $(function() {
   var $messages = $('.messages'); // Messages area
   var $inputMessage = $('.inputMessage'); // Input message input box
 
+    var $roomMessage = $('.roomMessage'); // Input message input box
+
+
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
 
@@ -65,6 +68,10 @@ $(function() {
       });
       // tell server to execute 'new message' and send along one parameter
       socket.emit('new message', message);
+
+      if ($roomMessage.length > 0){
+        socket.emit('message to room', { message: message, bssid: $roomMessage.val()});        
+      }
     }
   }
 
