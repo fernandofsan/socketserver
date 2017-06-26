@@ -36,6 +36,9 @@ io.on('connection', function (socket) {
     socket.username = username;
     ++numUsers;
     addedUser = true;
+
+    console.log('added user: ' + username);
+
     socket.emit('login', {
       numUsers: numUsers
     });
@@ -71,5 +74,15 @@ io.on('connection', function (socket) {
         numUsers: numUsers
       });
     }
+  });
+
+  socket.on('join room', function(room){
+      room = JSON.parse(room);
+      console.log('join room: ' + room.name);
+      socket.join(room.bssid);
+      io.in(room.bssid).emit('login2', {
+        message: 'Nova sala adicionada: ' + room.name,
+        bssid: room.bssid
+      })
   });
 });
