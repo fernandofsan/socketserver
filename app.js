@@ -83,7 +83,8 @@ io.on('connection', function (socket) {
       socket.join(room.bssid);
       io.in(room.bssid).emit('login2', {
         message: 'Welcome to the room: ' + room.name,
-        bssid: room.bssid
+        bssid: room.bssid,
+        username: socket.username
       })
   });
 

@@ -70,7 +70,7 @@ $(function() {
       socket.emit('new message', message);
 
       if ($roomMessage.length > 0){
-        socket.emit('message to room', { message: message, bssid: $roomMessage.val()});        
+        socket.emit('message to room', { message: message, bssid: $roomMessage.val(),  username: username});        
       }
     }
   }
